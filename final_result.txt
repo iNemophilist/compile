@@ -1,0 +1,180 @@
+		.data
+		input_stack:.space 1024
+		input_buffer: .word 0
+		int_stack:  .word 128
+		bool_stack:  .byte 128 
+		a: .word 0
+		b: .word 0
+		c: .word 0
+		cond1: .byte 0
+		cond2: .byte 0
+		cond3: .byte 0
+		.text
+	
+		.globl main
+	
+		main:
+		#初始化栈
+		#int栈初始化,t8为int栈指针
+		la $t8, int_stack
+		addiu $t8, $t8, 508
+		#bool栈初始化
+		la $t9, bool_stack
+		addiu $t9, $t9, 127
+		# 读入
+		la $t0, input_stack
+		addiu $t0, $t0, 1024
+		sw $t0, input_buffer
+		li $v0, 5
+		syscall
+		sw $v0, a
+		# 读入
+		la $t0, input_stack
+		addiu $t0, $t0, 1024
+		sw $t0, input_buffer
+		li $v0, 5
+		syscall
+		sw $v0, b
+		# 读入
+		la $t0, input_stack
+		addiu $t0, $t0, 1024
+		sw $t0, input_buffer
+		li $v0, 5
+		syscall
+		sw $v0, c
+		lw $t1, a
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		lw $t1, b
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		#出栈到t1与t2
+		lw $t1, 0($t8)
+		addiu $t8, $t8, 4
+		lw $t2, 0($t8)
+		addiu $t8, $t8, 4
+		sge $t1, $t2, $t1
+		#t1入栈
+		addiu $t9, $t9, -1
+		sb $t1, 0($t9)
+		# 将栈顶元素写回
+		#出栈到t1
+		lb $t1, 0($t9)
+		addiu $t9, $t9, 1
+		la $t2, cond1
+		sb $t1, 0($t2)
+		lw $t1, a
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		lw $t1, c
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		#出栈到t1与t2
+		lw $t1, 0($t8)
+		addiu $t8, $t8, 4
+		lw $t2, 0($t8)
+		addiu $t8, $t8, 4
+		sge $t1, $t2, $t1
+		#t1入栈
+		addiu $t9, $t9, -1
+		sb $t1, 0($t9)
+		# 将栈顶元素写回
+		#出栈到t1
+		lb $t1, 0($t9)
+		addiu $t9, $t9, 1
+		la $t2, cond2
+		sb $t1, 0($t2)
+		lw $t1, b
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		lw $t1, c
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		#出栈到t1与t2
+		lw $t1, 0($t8)
+		addiu $t8, $t8, 4
+		lw $t2, 0($t8)
+		addiu $t8, $t8, 4
+		sge $t1, $t2, $t1
+		#t1入栈
+		addiu $t9, $t9, -1
+		sb $t1, 0($t9)
+		# 将栈顶元素写回
+		#出栈到t1
+		lb $t1, 0($t9)
+		addiu $t9, $t9, 1
+		la $t2, cond3
+		sb $t1, 0($t2)
+		lb $t0, cond1
+		beqz $t0, else_0
+		lb $t0, cond2
+		beqz $t0, else_1
+		# 打印
+		lw $t0, a
+		li $v0, 1
+		move $a0, $t0
+		syscall
+		j endif_1
+		else_1:
+		# 打印
+		lw $t0, c
+		li $v0, 1
+		move $a0, $t0
+		syscall
+		endif_1:
+		j endif_0
+		else_0:
+		endif_0:
+		lw $t1, a
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		lw $t1, b
+		#t1入栈
+		addiu $t8, $t8, -4
+		sw $t1, 0($t8)
+		#出栈到t1与t2
+		lw $t1, 0($t8)
+		addiu $t8, $t8, 4
+		lw $t2, 0($t8)
+		addiu $t8, $t8, 4
+		slt $t1, $t2, $t1
+		#t1入栈
+		addiu $t9, $t9, -1
+		sb $t1, 0($t9)
+		# 将栈顶元素写回
+		#出栈到t1
+		lb $t1, 0($t9)
+		addiu $t9, $t9, 1
+		la $t2, cond1
+		sb $t1, 0($t2)
+		lb $t0, cond1
+		beqz $t0, else_2
+		lb $t0, cond3
+		beqz $t0, else_3
+		# 打印
+		lw $t0, b
+		li $v0, 1
+		move $a0, $t0
+		syscall
+		j endif_3
+		else_3:
+		# 打印
+		lw $t0, c
+		li $v0, 1
+		move $a0, $t0
+		syscall
+		endif_3:
+		j endif_2
+		else_2:
+		endif_2:
+		li $v0, 10
+	
+		syscall
+	
