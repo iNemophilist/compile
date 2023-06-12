@@ -1,6 +1,13 @@
 # compile
 LitteleC这种类C简单语言的编译器（实现了词法分析、语法分析、输出mips汇编代码、创建符号表未实现类型检查）
-
+## 代码采用vscode编写，并采用GB2312编码，如果程序运行出现未知错误，请将文档重新保存为GB2312格式
+## 文件采用文档进行输入与输出. 
+### test.txt中存储源代码
+### result.txt中存储词法分析结果
+### result_parser.txt中存储语法分析结果(一颗序列化的语法树)
+### test_parser_result.txt 中存储语法分析结果反序列化再序列化的结果，以验证反序列化与序列化是否正确
+### final_result.txt中存储的是mips汇编代码，汇编代码我通过mars4_5模拟器验证的正确性
+## sourceProgram1-8是八个littleC的测试源代码
 ## 具体文法定义如下：
 基于C语法设计的源语言LittleC
 
