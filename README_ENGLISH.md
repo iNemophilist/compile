@@ -1,6 +1,6 @@
 # Compile
 A compiler for LittleC, a simplified C-like language (implements lexical analysis, syntax analysis, outputs MIPS assembly code, creates symbol tables, does not implement type checking).
-## The code is written in VSCode and uses GB2312 encoding. If unknown errors occur during program execution, please save the document again in GB2312 format.
+## The code is written in VS and uses GB2312 encoding. If unknown errors occur during program execution, please save the document again in GB2312 format.
 ## Files use document-based input and output. 
 ### test.txt stores the source code.
 ### result.txt stores the lexical analysis results.
